@@ -1,9 +1,11 @@
 package com.example.jetweatherforecast.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.jetweatherforecast.screens.search.SearchScreen
 import com.example.jetweatherforecast.screens.WeatherFavoriteScreen
 import com.example.jetweatherforecast.screens.main.WeatherMainScreen
@@ -22,10 +24,19 @@ fun WeatherNavigation() {
         composable(WeatherScreens.FavoriteScreen.name) {
             WeatherFavoriteScreen(navController = navController)
         }
+        val route = WeatherScreens.MainScreen.name
 
-        composable(WeatherScreens.MainScreen.name) {
-//            val viewModel = hiltViewModel<MainViewModel>()
-            WeatherMainScreen(navController = navController)
+        composable("$route/{city}", arguments = listOf(
+            navArgument(name = "city") {
+                type = NavType.StringType
+            }
+        )) {navBack ->
+            navBack.arguments?.getString("city").let {
+                city->
+                //            val viewModel = hiltViewModel<MainViewModel>()
+                WeatherMainScreen(navController = navController, city = city)
+            }
+
         }
 
         composable(WeatherScreens.SearchScreen.name) {

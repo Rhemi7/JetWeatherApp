@@ -1,6 +1,7 @@
 package com.example.jetweatherforecast.screens.search
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.widget.WeatherAppBar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -50,8 +52,9 @@ fun SearchScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(16.dp)
                         .align(Alignment.CenterHorizontally)
-                ) {
-
+                ) {mCity ->
+//                    Log.d("TAG", "SearchScreen: $it")
+                    navController.navigate(WeatherScreens.MainScreen.name + "/$mCity")
                 }
             }
         }
