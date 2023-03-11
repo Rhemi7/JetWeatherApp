@@ -34,6 +34,7 @@ import com.example.jetweatherforecast.R
 import com.example.jetweatherforecast.data.DataOrException
 import com.example.jetweatherforecast.model.Weather
 import com.example.jetweatherforecast.model.WeatherItem
+import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.utils.formatDate
 import com.example.jetweatherforecast.utils.formatDateTime
 import com.example.jetweatherforecast.utils.formatDecimals
@@ -72,6 +73,9 @@ import com.example.jetweatherforecast.widget.main_screen_widgets.WeekWeatherInfo
             title = weather.city.name + " ,${weather.city.country}",
 //            icon = Icons.Default.ArrowBack,
             navController = navController,
+            onAddActionClicked = {
+                navController.navigate(WeatherScreens.SearchScreen.name)
+            },
             elevation = 5.dp
         ) {
             Log.d("TAG", "MainScaffold: Button Clicked")
