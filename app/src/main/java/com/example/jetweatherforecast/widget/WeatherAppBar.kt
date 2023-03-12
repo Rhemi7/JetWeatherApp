@@ -1,12 +1,17 @@
 package com.example.jetweatherforecast.widget
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -28,6 +33,14 @@ fun WeatherAppBar(
     onAddActionClicked: () -> Unit = {},
     onButtonClicked: () -> Unit = {},
 ) {
+    val showDialog = remember {
+        mutableStateOf(false)
+    }
+
+    if (showDialog.value) {
+        ShowSettingDialog(showDialog = showDialog, navController = navController)
+    }
+
     TopAppBar(
         title = {
             Text(
@@ -47,7 +60,9 @@ fun WeatherAppBar(
                               contentDescription = "Search Icon"
                           )
                       }
-                      IconButton(onClick = {  }) {
+                      IconButton(onClick = {
+                          showDialog.value = true
+                      }) {
                           Icon(
                               imageVector = Icons.Rounded.MoreVert,
                               contentDescription = "More Icon"
@@ -71,5 +86,46 @@ fun WeatherAppBar(
         backgroundColor = Color.Transparent,
         elevation = elevation
     )
+
+}
+
+@Composable
+fun ShowSettingDialog(showDialog: MutableState<Boolean>, navController: NavController) {
+    var expanded by remember {
+        mutableStateOf(true)
+    }
+    val items = listOf("About", "Favorites", "Settings")
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.TopEnd)
+            .absolutePadding(top = 45.dp, right = 20.dp)) {
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .width(1240.dp)
+                .background(Color.White)
+        ) {
+            items.forEachIndexed {index, text -> DropdownMenuItem(onClick = {
+                expanded = false
+                showDialog.value = false
+            }) {
+                Icon(
+                    imageVector = when (text) {
+                        "About" -> Icons.Default.Info
+                        "Favorites" -> Icons.Default.FavoriteBorder
+                        else -> Icons.Default.Settings
+                    }, contentDescription = null,
+                tint = Color.LightGray
+                )
+                Text(text = text,
+                    modifier = Modifier.clickable { },
+                    fontWeight = FontWeight.W300)
+
+            }}
+        }
+            }
 
 }
