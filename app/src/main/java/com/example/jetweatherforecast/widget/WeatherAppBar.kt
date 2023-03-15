@@ -87,23 +87,32 @@ fun WeatherAppBar(
                          }
             
             if(isMainScreen) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorite icon",
-                    modifier = Modifier
-                        .scale(0.9f)
-                        .padding(start = 5.dp)
-                        .clickable {
-                            val dataList = title.split(",")
-                            favoriteViewModel.insertFavorite(
-                                Favorite(
-                                    city = dataList[0],
-                                    country = dataList[1]
-                                )
-                            )
+                val isAlreadyFavList = favoriteViewModel.favList.collectAsState().value.filter {
+                    item -> (item.city == title.split(",")[0])
+                }
 
-                        },
-                    tint = Color.Red.copy(alpha = 0.6f))
+                if(isAlreadyFavList.isEmpty()) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "Favorite icon",
+                        modifier = Modifier
+                            .scale(0.9f)
+                            .padding(start = 5.dp)
+                            .clickable {
+                                val dataList = title.split(",")
+                                favoriteViewModel.insertFavorite(
+                                    Favorite(
+                                        city = dataList[0],
+                                        country = dataList[1]
+                                    )
+                                )
+
+                            },
+                        tint = Color.Red.copy(alpha = 0.6f))
+                } else {
+                    Box{}
+                }
+
             }
         },
         backgroundColor = Color.Transparent,
