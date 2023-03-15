@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.jetweatherforecast.model.Favorite
+import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.screens.favorite.FavoriteViewModel
 import com.example.jetweatherforecast.widget.WeatherAppBar
 
@@ -61,7 +62,9 @@ fun CityRow(favorite: Favorite, navController: NavController, favoriteViewModel:
             .padding(3.dp)
             .fillMaxWidth()
             .height(50.dp)
-            .clickable { },
+            .clickable {
+                navController.navigate(WeatherScreens.MainScreen.name + "/${favorite.city}")
+            },
         shape = CircleShape.copy(topEnd = CornerSize(6.dp)),
         color = Color(0xffB2DFDB)
     ) {
