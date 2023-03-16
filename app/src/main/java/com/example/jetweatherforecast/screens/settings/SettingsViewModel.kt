@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(private val repository: WeatherDbRepository): ViewModel() {
 
-    private val _unitList = MutableStateFlow<List<Unit>>(emptyList())
+    private val _unitList = MutableStateFlow<List<com.example.jetweatherforecast.model.Unit>>(emptyList())
     val unitList = _unitList.asStateFlow()
 
     init {
@@ -24,7 +24,7 @@ class SettingsViewModel @Inject constructor(private val repository: WeatherDbRep
             repository.getUnits().distinctUntilChanged().collect {
                     listOfUnits ->
                 if (listOfUnits.isEmpty()) {
-                    Log.d("TAG", ": Empty favs ")
+                    Log.d("TAG", ": Empty units ")
                 } else {
                     _unitList.value = listOfUnits
                     Log.d("Unitss", ":${unitList.value} ")
@@ -34,11 +34,11 @@ class SettingsViewModel @Inject constructor(private val repository: WeatherDbRep
     }
 
 
-    fun insertUnit(unit: Unit) = viewModelScope.launch { repository.insertUnit(unit) }
+    fun insertUnit(unit: com.example.jetweatherforecast.model.Unit) = viewModelScope.launch { repository.insertUnit(unit) }
 
-    fun updateUnit(unit: Unit) = viewModelScope.launch { repository.updateUnit(unit) }
+    fun updateUnit(unit: com.example.jetweatherforecast.model.Unit) = viewModelScope.launch { repository.updateUnit(unit) }
 
-    fun deleteUnit(unit: Unit) = viewModelScope.launch { repository.deleteUnit(unit) }
+    fun deleteUnit(unit: com.example.jetweatherforecast.model.Unit) = viewModelScope.launch { repository.deleteUnit(unit) }
 
     fun deleteAllUnit() = viewModelScope.launch { repository.deleteAllUnits() }
 
