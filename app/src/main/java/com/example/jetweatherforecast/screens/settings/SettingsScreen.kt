@@ -30,13 +30,9 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
         mutableStateOf(false)
     }
 
-    val measurementUnits = listOf("Imperial (F)", "Metric (C)")
+    val measurementUnits = listOf( "Metric (C)", "Imperial (F)")
 
     val choiceFromDB = settingsViewModel.unitList.collectAsState().value
-
-//    val choiceDef by remember {
-//        mutableStateOf(0)
-//    }
 
     val defaultChoice = if (choiceFromDB.isEmpty()) measurementUnits[0] else choiceFromDB[0].unit
 
@@ -50,7 +46,9 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
             icon = Icons.Default.ArrowBack,
             isMainScreen = false,
             navController = navController
-        )
+        ) {
+            navController.popBackStack()
+        }
     }) {
         Surface(modifier = Modifier
             .fillMaxWidth()
