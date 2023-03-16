@@ -17,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(private val repository: WeatherDbRepository) :
     ViewModel() {
-        private val _favList = MutableStateFlow<List<Favorite>>(emptyList())
+
+    private val _favList = MutableStateFlow<List<Favorite>>(emptyList())
     val favList = _favList.asStateFlow()
 
     init {
